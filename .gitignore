@@ -1,0 +1,11 @@
+node_modules/
+# public/build
+# public/assets.json
+
+
+
+
+build/
+coverage/
+.env
+# .vscode/
