@@ -12,6 +12,7 @@ const SESSION_ATTRIBUTES = gql`
     room
     level
     startsAt
+    description @include(if: $isDescription)
     speakers {
       id
       name
@@ -20,7 +21,7 @@ const SESSION_ATTRIBUTES = gql`
 `;
 
 const SESSIONS = gql`
-  query sessions($day: String!) {
+  query sessions($day: String!, $isDescription: Boolean!) {
     intro: sessions(day: $day, level: "Introductory and overview") {
       ...SessionInfo
     }
@@ -42,7 +43,11 @@ function AllSessionList() {
 }
 
 function SessionList({ day }) {
-  const { loading, error, data } = useQuery(SESSIONS, { variables: { day } });
+  const isDescription = true;
+
+  const { loading, error, data } = useQuery(SESSIONS, {
+    variables: { day, isDescription },
+  });
 
   if (loading) return <p>Loading Sessions...</p>;
 
@@ -58,7 +63,16 @@ function SessionList({ day }) {
 }
 
 function SessionItem({ session }) {
-  const { id, title, level, day, room, startsAt, speakers } = session;
+  const {
+    id,
+    title,
+    level,
+    day,
+    room,
+    startsAt,
+    description,
+    speakers,
+  } = session;
   /* ---> Replace hard coded session values with data that you get back from GraphQL server here */
   return (
     <div key={id} className="col-xs-12 col-sm-6" style={{ padding: 5 }}>
@@ -71,6 +85,7 @@ function SessionItem({ session }) {
           <h5>{`Day: ${day}`}</h5>
           <h5>{`Room Number: ${room}`}</h5>
           <h5>{`Starts at: ${startsAt}`}</h5>
+          {description && <h5>{`Description: ${description}`}</h5>}
         </div>
         <div className="panel-footer">
           {speakers.map(({ id, name }) => (
