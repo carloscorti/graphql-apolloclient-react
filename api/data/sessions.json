@@ -3630,6 +3630,13 @@
       "level": "Intermediate",
       "day": "Thursday",
       "id": "814b1f5e-e6df-440b-a91c-df198b5bbed2"
+    },
+    {
+      "title": "New session",
+      "description": "the best session",
+      "level": "Advanced",
+      "day": "Friday",
+      "id": "46e42ad1-7362-46db-a986-ad1c4878950f"
     }
   ]
 }
