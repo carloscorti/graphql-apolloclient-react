@@ -167,7 +167,12 @@ export function Sessions() {
 
 export function SessionForm() {
   /* ---> Call useMutation hook here to create new session and update cache */
-  const [createNewSession, data] = useMutation(CREATE_SESSION);
+  // const [createNewSession, data] = useMutation(CREATE_SESSION);
+  const [createNewSession, { called, error }] = useMutation(CREATE_SESSION);
+
+  if (called) return <p>Session saved correctly</p>;
+
+  if (error) return <p>Error Creating Sessions...</p>;
 
   return (
     <div
