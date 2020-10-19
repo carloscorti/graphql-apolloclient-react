@@ -37,7 +37,8 @@
           "name": "GraphQL - The Big Picture"
         }
       ],
-      "name": "West Larson"
+      "name": "West Larson",
+      "featured": true
     },
     {
       "id": "1491c981-bbb2-4db3-b89a-3a7434451fed",
@@ -48,7 +49,8 @@
           "name": "Rapid Cross-Platform AR Development with React Native"
         }
       ],
-      "name": "Xoan Chapman"
+      "name": "Xoan Chapman",
+      "featured": true
     },
     {
       "id": "223d2b9d-a582-4e14-bebb-d636fb030bda",
@@ -70,7 +72,8 @@
           "name": "Building a QA practice from scratch"
         }
       ],
-      "name": "Ripley Vargas"
+      "name": "Ripley Vargas",
+      "featured": true
     },
     {
       "id": "e8eb22dd-d167-4efa-ba0e-905c94b38f9b",
@@ -118,7 +121,8 @@
           "name": "Just because you can do something, doesn't mean you should!"
         }
       ],
-      "name": "Edward Brown"
+      "name": "Edward Brown",
+      "featured": true
     },
     {
       "id": "fdf3c776-f100-41f5-bb22-7a1f16710740",
@@ -239,7 +243,8 @@
           "name": "Practical Grid: Get Started with CSS Grid in Practical, Reusable Components"
         }
       ],
-      "name": "Ocean Kelley"
+      "name": "Ocean Kelley",
+      "featured": true
     },
     {
       "id": "7f695e1c-2165-4a1e-a3e7-0204cf9cb173",
@@ -976,7 +981,8 @@
           "name": "Azure Pipelines from Scratch"
         }
       ],
-      "name": "Memphis White"
+      "name": "Memphis White",
+      "featured": true
     },
     {
       "id": "266b5537-0164-405b-bbf4-1acefbf4c9f5",
