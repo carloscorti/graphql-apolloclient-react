@@ -100,7 +100,7 @@ function SessionItem({ session }) {
     description,
     speakers,
   } = session;
-  /* ---> Replace hard coded session values with data that you get back from GraphQL server here */
+
   return (
     <div key={id} className="col-xs-12 col-sm-6" style={{ padding: 5 }}>
       <div className="panel panel-default">
@@ -184,9 +184,61 @@ export function Sessions() {
 }
 
 export function SessionForm() {
-  /* ---> Call useMutation hook here to create new session and update cache */
-  // const [createNewSession, data] = useMutation(CREATE_SESSION);
-  const [createNewSession, { called, error }] = useMutation(CREATE_SESSION);
+  const isDescription = true;
+
+  const updateCache = (cache, { data: { createSession } }) => {
+    // OPTION TO UPDATE ONLY ONE QUERY
+    // console.log(cache);
+    // console.log(createSession);
+    // const cacheData = cache.readQuery({
+    //   query: ALL_SESSIONS,
+    //   variables: { isDescription },
+    // });
+    // console.log(cacheData);
+    // cache.writeQuery({
+    //   query: ALL_SESSIONS,
+    //   variables: { isDescription },
+    //   data: {
+    //     sessions: [...cacheData.sessions, createSession],
+    //   },
+    // });
+
+    cache.modify({
+      fields: {
+        sessions(existingSessions = []) {
+          const newSession = createSession;
+          cache.writeQuery({
+            query: ALL_SESSIONS,
+            data: { newSession, ...existingSessions },
+          });
+
+          // OPTION 1
+          // const newSession = cache.writeFragment({
+          //   data: createSession,
+          //   fragment: SESSION_ATTRIBUTES,
+          // });
+          // const newSession = cache.writeFragment({
+          //   data: createSession,
+          //   fragment: gql`
+          //     fragment NewSession on Session {
+          //       id
+          //       title
+          //     }
+          //   `,
+          // });
+          // console.log(newSession);
+          // return [...existingSessions, newSession];
+
+          // OPTION 2
+          // return [...existingSessions, createSession];
+        },
+      },
+    });
+  };
+
+  const [createSession, { called, error }] = useMutation(CREATE_SESSION, {
+    update: updateCache,
+  });
 
   if (called) return <p>Session saved correctly</p>;
 
@@ -210,7 +262,9 @@ export function SessionForm() {
           level: "",
         }}
         onSubmit={async (values) => {
-          await createNewSession({ variables: { newSession: values } });
+          await createSession({
+            variables: { newSession: values },
+          });
         }}
       >
         {() => (
