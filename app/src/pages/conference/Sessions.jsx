@@ -29,6 +29,15 @@ const CREATE_SESSION = gql`
   }
 `;
 
+const ALL_SESSIONS = gql`
+  query sessions($isDescription: Boolean!) {
+    sessions {
+      ...SessionInfo
+    }
+  }
+  ${SESSION_ATTRIBUTES}
+`;
+
 const SESSIONS = gql`
   query sessions($day: String!, $isDescription: Boolean!) {
     intro: sessions(day: $day, level: "Introductory and overview") {
@@ -44,11 +53,20 @@ const SESSIONS = gql`
   ${SESSION_ATTRIBUTES}
 `;
 
-/* ---> Define queries, mutations and fragments here */
-
 function AllSessionList() {
-  /* ---> Invoke useQuery hook here to retrieve all sessions and call SessionItem */
-  return <SessionItem />;
+  const isDescription = true;
+
+  const { loading, error, data } = useQuery(ALL_SESSIONS, {
+    variables: { isDescription },
+  });
+
+  if (loading) return <p>Loading Sessions...</p>;
+
+  if (error) return <p>Error Loading Sessions...</p>;
+
+  return data.sessions.map((session) => (
+    <SessionItem key={session.id} session={{ ...session }} />
+  ));
 }
 
 function SessionList({ day }) {
@@ -114,7 +132,7 @@ function SessionItem({ session }) {
 }
 
 export function Sessions() {
-  const [day, setDay] = useState("");
+  const [day, setDay] = useState("All");
   return (
     <>
       <section className="banner">
